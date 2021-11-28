@@ -1,11 +1,15 @@
+# 特殊状态下标
 ERROR_STATE = -1
 
+# 状态类型
 NORMAL_TYPE = 1
 FINAL_TYPE = 2
 ROLLBACK_FINAL_TYPE = 3
 
+# 特殊字符
 EOF = "EOF"
 
+# 特殊token类别码
 EOF_TOKEN = -1
 UNRECOGNIZED_TOKEN = 0
 IDENTIFIER = 1
@@ -13,13 +17,8 @@ INTEGER = 2
 REAL_NUMBER = 3
 SPLIT = 4
 
+# token类别码表
 CATEGORY_DICT = {
-    # 文件结束: -1
-    # 识别出错: 0
-    # 标识符: 1
-    # 整数: 2
-    # 实数: 3
-    # 分隔符: 4
     # 字符
     "<=": 11,
     "<": 12,
@@ -43,6 +42,7 @@ CATEGORY_DICT = {
     "}": 30,
     "'": 31,
     '"': 32,
+
     # 关揵字
     "auto": 100,
     "break": 101,
@@ -78,6 +78,8 @@ CATEGORY_DICT = {
     "while": 131
 }
 
+# 字符集合判断函数
+
 
 def judge_space(token):
     return token.isspace()
@@ -99,6 +101,7 @@ def judge_split(token):
     return token == ";"
 
 
+# 字符集合-判断函数字典
 CHARSET_FUNC_DICT = {
     'space': judge_space,
     'letter': judge_letter,

@@ -2,6 +2,18 @@ from lexicalAnalyze.utils import EOF
 
 
 class InputCache:
+    """
+    输入缓存类（按行缓存）
+    属性:
+    f: 输入文件
+    cache: 行读入缓存
+    beginning: 当前token起始位置
+    forward: 待读取字符位置
+    方法:
+    getchar(): 从输入缓冲区中将下一个输入字符读入ch，并将读入指针前移。
+    retract(num=1): 将数据缓冲区读入指针向前回退num个字符。
+    pop_token(): 返回输入缓冲区开始指针到读入指针之间的字符串，并将开始指针与读入指针放到下一个token的位置。
+    """
     def __init__(self, file):
         self.__cache = ""
         self.__beginning = 0
@@ -35,6 +47,3 @@ class InputCache:
         self.__beginning = self.__forward
         self.__forward = self.__beginning
         return token.lstrip()
-
-    def beginning_forward(self):
-        self.__beginning += 1
