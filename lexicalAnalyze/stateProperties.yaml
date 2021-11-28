@@ -1,0 +1,88 @@
+# 字符集合: space、letter、digit、split
+
+states:
+    - num: 0
+      edges:
+        space: 0
+        letter: 1
+        digit: 3
+        '<': 11
+        '>': 11
+        '=': 11
+        '!': 11
+        split: 14
+        other: 15
+
+    - num: 1
+      edges:
+        letter: 1
+        digit: 1
+        other: 2
+
+    - num: 2
+      final: True
+      rollback: True
+      token: (CATEGORY_DICT[{token}], {token}) if {token} in CATEGORY_DICT else (IDENTIFIER, {token})
+
+    - num: 3
+      edges:
+        digit: 3
+        'E': 6
+        '.': 4
+        other: 10
+
+    - num: 4
+      edges:
+        digit: 5
+
+    - num: 5
+      edges:
+        'E': 6
+        other: 9
+
+    - num: 6
+      edges:
+        digit: 8
+        '+': 7
+        '-': 7
+
+    - num: 7
+      edges:
+        digit: 8
+
+    - num: 8
+      edges:
+        digit: 8
+        other: 9
+
+    - num: 9
+      final: True
+      rollback: True
+      token: (REAL_NUMBER, float({token}))
+
+    - num: 10
+      final: True
+      rollback: True
+      token: (INTEGER, float({token}))
+
+    - num: 11
+      edges:
+        '=': 12
+        other: 13
+
+    - num: 12
+      final: True
+      rollback: False
+
+    - num: 13
+      final: True
+      rollback: True
+
+    - num: 14
+      final: True
+      rollback: False
+      token: (SPLIT, {token})
+
+    - num: 15
+      final: True
+      rollback: False
