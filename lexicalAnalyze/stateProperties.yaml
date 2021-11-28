@@ -22,7 +22,7 @@ states:
     - num: 2
       final: True
       rollback: True
-      token: (CATEGORY_DICT[{token}], {token}) if {token} in CATEGORY_DICT else (IDENTIFIER, {token})
+      token: (CATEGORY_DICT[token], token) if token in CATEGORY_DICT else (IDENTIFIER, token)
 
     - num: 3
       edges:
@@ -58,12 +58,12 @@ states:
     - num: 9
       final: True
       rollback: True
-      token: (REAL_NUMBER, float({token}))
+      token: (REAL_NUMBER, float(token))
 
     - num: 10
       final: True
       rollback: True
-      token: (INTEGER, float({token}))
+      token: (INTEGER, float(token))
 
     - num: 11
       edges:
@@ -81,7 +81,7 @@ states:
     - num: 14
       final: True
       rollback: False
-      token: (SPLIT, {token})
+      token: (SPLIT, token)
 
     - num: 15
       final: True

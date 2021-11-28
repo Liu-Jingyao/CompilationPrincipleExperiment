@@ -8,7 +8,7 @@ class State:
     基本状态类
     属性：
     num: 状态编号
-    func_edges: 以ch属于字符集合为转移条件的边，以方法引用形式保存 （为什么是方法引用？我也不知道哈哈）
+    func_edges: 以ch属于字符集合为转移条件的边，以方法引用形式保存
     char_edges: 以ch等于某个字符为转移条件的边，以键值对形式保存
     other_next: ch为其他情况下转移的目标状态，如果不存在other边则转移至ERROR_STATE
     type: 状态类型，基本状态为1，终止状态为2，需要回退的终止状态为3
@@ -52,10 +52,10 @@ class EndState(State):
     get_value(token): 获取当前单词的(类别码，属性值)二元组
     """
 
-    def __init__(self, num, need_rollback=False, value_func_str='(CATEGORY_DICT[{token}], {token})'):
+    def __init__(self, num, need_rollback=False, value_func_str='(CATEGORY_DICT[token], token)'):
         super().__init__(num, func_edges=None, char_edges=None)
         self.type = ROLLBACK_FINAL_TYPE if need_rollback else FINAL_TYPE
-        self.value_func_str = value_func_str.format(token='token')
+        self.value_func_str = value_func_str
         self.value_func = lambda token: eval(value_func_str)
 
     def get_value(self, token):
