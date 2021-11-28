@@ -8,7 +8,7 @@
 
 ### 配置文件编写示例
 ![image](https://user-images.githubusercontent.com/53286995/143730558-e007e197-c59a-4393-baaa-9e8bb5eb6443.png)
-<img src="https://user-images.githubusercontent.com/53286995/143730540-7bc8dc48-f52c-4237-80cd-842ad4ecc9ef.png" width="75%" height="75%">
+<img src="https://user-images.githubusercontent.com/53286995/143731226-5bf68854-c4ce-4f60-b617-d9181e772326.png" width="75%" height="75%">
 
 ### 状态转换图
 原始的状态转换图：
