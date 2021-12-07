@@ -1,5 +1,5 @@
-from lexicalAnalyze.states import STATES
-from lexicalAnalyze.utils import *
+from lexical_analysis.states import STATES
+from utils import *
 
 
 def token_scan(inputCache):

@@ -1,0 +1,6 @@
+S S+T
+S T
+T T*F
+T F
+F (S)
+F i

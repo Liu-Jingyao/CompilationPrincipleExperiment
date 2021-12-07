@@ -1,6 +1,7 @@
 import yaml
+import os
 
-from lexicalAnalyze.utils import *
+from utils import *
 
 
 class State:
@@ -64,7 +65,7 @@ class EndState(State):
 
 # 解析yaml状态转换图
 STATES = [None for _ in range(200)]
-with open('stateProperties.yaml', 'r', encoding='utf-8') as f:
+with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'stateProperties.yaml'), 'r', encoding='utf-8') as f:
     file_data = f.read()
     data = yaml.load(file_data, Loader=yaml.FullLoader)
     state_data_list = data['states']

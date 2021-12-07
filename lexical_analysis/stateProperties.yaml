@@ -13,6 +13,8 @@ states:
         "'": 14
         '"': 17
         split: 19
+        '&': 21
+        '|': 23
         other: 20
 
     - num: 1
@@ -110,5 +112,21 @@ states:
       token: (SPLIT, token)
 
     - num: 20
+      final: True
+      rollback: False
+
+    - num: 21
+      edges:
+        '&': 22
+
+    - num: 22
+      final: True
+      rollback: False
+
+    - num: 23
+      edges:
+        '&': 22
+
+    - num: 24
       final: True
       rollback: False

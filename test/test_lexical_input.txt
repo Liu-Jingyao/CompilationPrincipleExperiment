@@ -1,5 +1,6 @@
 int main() {
-    int a = 10;
+    int a;
+    a = 10;
     if(a == 10) {
         char c = 'a';
         printf("Hello World!%c", c);

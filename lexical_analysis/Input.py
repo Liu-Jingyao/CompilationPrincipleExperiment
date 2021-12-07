@@ -1,4 +1,4 @@
-from lexicalAnalyze.utils import EOF
+from utils import EOF
 
 
 class InputCache:
