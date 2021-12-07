@@ -13,7 +13,7 @@ def lexical_analyze(q):
     while token[0] != EOF_TOKEN:
         q.put(token)
         token = token_scan(inputCache)
-    q.put(EOF_TOKEN)
+    q.put((EOF_TOKEN, 0))
     q.close()
 
 

@@ -5,7 +5,7 @@ import re
 from functools import reduce
 
 from utils import initial_production_list, EMPTY_TOKEN, EOF_TOKEN, GrammarVarEnum, print_first_or_follow, \
-    print_item_closure, CATEGORY_DICT_REVERSE
+    print_item_closure, CATEGORY_DICT_REVERSE, print_action_or_goto
 
 # with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), "SLR1_test_grammar.txt"), "r", encoding="utf-8") as f:
 #     production_list = [("S'", "S")]
@@ -96,12 +96,13 @@ class AnalysisTable:
                     for a in follow[item.left]:
                         self.action[(k, a)] = "r" + str(item.production_num)
                 else:
-                    a = item.get_next_token()
+                    a = item.get_next_token_or_var()
                     if a in V:
                         self.goto[(k, a)] = item_closure.go[a].num
                     else:
                         self.action[(k, a)] = "S" + str(item_closure.go[a].num)
-        return
+        print_action_or_goto(self.action, "ACTION")
+        print_action_or_goto(self.goto, "GOTO")
 
 
 class ItemClosure:
@@ -116,7 +117,7 @@ class ItemClosure:
             x2item_list = {}
             for item in closure.closure_list:
                 if not item.is_reduce():
-                    x2item_list[item.get_next_token()] = x2item_list.get(item.get_next_token(), []) + [item.get_next_item()]
+                    x2item_list[item.get_next_token_or_var()] = x2item_list.get(item.get_next_token_or_var(), []) + [item.get_next_item()]
             item_closure_initial_list = [item_closure.initial_list for item_closure in item_closure_list]
             for x, item_list in x2item_list.items():
                 if item_list not in item_closure_initial_list:
@@ -139,7 +140,7 @@ class ItemClosure:
             flag = False
             for item in self.closure_list:
                 for production_num, production in enumerate(production_list):
-                    if not item.is_reduce() and item.get_next_token() == production[0] \
+                    if not item.is_reduce() and item.get_next_token_or_var() == production[0] \
                             and Item(production, production_num) not in self.closure_list:
                         self.closure_list.append(Item(production, production_num))
                         flag = True
@@ -187,7 +188,7 @@ class Item:
     def is_reduce(self):
         return self.dot == len(self.right)
 
-    def get_next_token(self):
+    def get_next_token_or_var(self):
         return self.right[self.dot]
 
     def get_next_item(self):

@@ -1,4 +1,5 @@
 # 编译原理实验：词法分析器、语法分析器
+（待更新）
 ## 词法分析器
 基于yaml配置文件的词法分析器。
 
@@ -17,8 +18,9 @@
 ![image](https://user-images.githubusercontent.com/53286995/143731060-c0d70d4b-76de-4cb8-ba98-87fe4e7457ea.png)
 
 ### 测试
-请使用lexicalAnalyze/test/下的脚本及测试文件进行测试。
+请使用main.py集成测试词法与语法分析器，使用test/下的脚本及测试文件进行单个模块测试。
 
 ![image](https://user-images.githubusercontent.com/53286995/143730817-aadbb6a5-db12-4942-ac56-3bbcb9968c57.png)
+
 
 HITWH 柳景耀
