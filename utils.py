@@ -205,7 +205,8 @@ initial_production_list = [
     (GrammarVarEnum.FUNC_CALL,
      [[(IDENTIFIER, 0), (25, 0), GrammarVarEnum.REAL_PARAM, (26, 0)], [(IDENTIFIER, 0), (25, 0), (26, 0)]]),
     # 实际参数->标识符|实际参数->常量|实际参数 逗号 实际参数|
-    (GrammarVarEnum.REAL_PARAM, [[(IDENTIFIER, 0)], [GrammarVarEnum.CONSTANT], [GrammarVarEnum.REAL_PARAM, (24, 0), GrammarVarEnum.REAL_PARAM]]),
+    (GrammarVarEnum.REAL_PARAM,
+     [[(IDENTIFIER, 0)], [GrammarVarEnum.CONSTANT], [GrammarVarEnum.REAL_PARAM, (24, 0), GrammarVarEnum.REAL_PARAM]]),
     # 循环结构->关揵字while 左括号 布尔表达式 右括号 左大括号 函数块 右大括号
     (GrammarVarEnum.LOOP,
      [[(131, 0), (25, 0), GrammarVarEnum.BOOL_EXPRESSION, (26, 0), (29, 0), GrammarVarEnum.FUNC_BLOCK, (30, 0)]]),
@@ -221,7 +222,9 @@ initial_production_list = [
     # 比较运算符->大于|小于|等于|大于等于|小于等于|不等于
     (GrammarVarEnum.CMP_OPT, [[(14, 0)], [(12, 0)], [(15, 0)], [(13, 0)], [(11, 0)], [(17, 0)]]),
     # 常量->算术表达式|布尔表达式|整数|实数|字符|字符串
-    (GrammarVarEnum.CONSTANT, [[GrammarVarEnum.VALUE_EXPRESSION], [GrammarVarEnum.BOOL_EXPRESSION], [(INTEGER, 0)], [(REAL_NUMBER, 0)], [(CHAR, 0)], [(STRING, 0)]])
+    (GrammarVarEnum.CONSTANT,
+     [[GrammarVarEnum.VALUE_EXPRESSION], [GrammarVarEnum.BOOL_EXPRESSION], [(INTEGER, 0)], [(REAL_NUMBER, 0)],
+      [(CHAR, 0)], [(STRING, 0)]])
 ]
 
 
@@ -249,20 +252,23 @@ def print_item_closure(item_closure):
            token_or_var, s in item_closure.go.items()})
 
 
+def token2str(token):
+    if token[0] in [1, 2, 3]:
+        return str(token[1])
+    if token[0] == 4:
+        return '; '
+    if token[0] == 5:
+        return "'%s'" % token[1]
+    if token[0] == 6:
+        return'"%s"' % token[1]
+    return CATEGORY_DICT_REVERSE[token[0]]
+
+
 def print_production(production):
     output = str(production[0]) + "->"
     for token_or_var in production[1]:
         if isinstance(token_or_var, tuple):
-            if token_or_var[0] in [1, 2, 3]:
-                output += str(token_or_var[1]) + " "
-            elif token_or_var[0] == 4:
-                output += '; '
-            elif token_or_var[0] == 5:
-                output += "'%s'" % token_or_var[1] + " "
-            elif token_or_var[0] == 6:
-                output += '"%s"' % token_or_var[1] + " "
-            else:
-                output += CATEGORY_DICT_REVERSE[token_or_var[0]] + " "
+            output += token2str(token_or_var) + " "
         elif isinstance(token_or_var, GrammarVarEnum):
             output += token_or_var.name + " "
         else:

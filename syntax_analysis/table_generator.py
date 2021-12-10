@@ -27,8 +27,8 @@ class AnalysisTable:
     def __init__(self):
         self.action = {}
         self.goto = {}
+        self.follow = {}
         first = {}
-        follow = {}
         # 求单个文法符号的FIRST集
         for x in T:
             first[x] = {x}
@@ -56,7 +56,7 @@ class AnalysisTable:
                     flag = True
         print_first_or_follow(first, "FIRST")
         # 求FOLLOW集
-        follow[GrammarVarEnum.ROOT] = {(EOF_TOKEN, 0)}
+        self.follow[GrammarVarEnum.ROOT] = {(EOF_TOKEN, 0)}
         flag = True
         while flag:
             flag = False
@@ -64,7 +64,7 @@ class AnalysisTable:
                 for i in range(0, len(production[1])):
                     token_or_var = production[1][i]
                     if token_or_var in V:
-                        pre_len = len(follow.get(token_or_var, set()))
+                        pre_len = len(self.follow.get(token_or_var, set()))
                         if i < len(production[1]) - 1:
                             # 求剩余文法符号串的first集
                             beta = tuple(production[1][i + 1:]) if i + 2 < len(production[1]) else production[1][i + 1]
@@ -76,14 +76,14 @@ class AnalysisTable:
                                     first[beta] |= first[beta_token_or_var] - {(EMPTY_TOKEN, 0)}
                                 else:
                                     first[beta] |= {(EMPTY_TOKEN, 0)}
-                            follow[token_or_var] = follow.get(token_or_var, set()) | first[beta] - {(EMPTY_TOKEN, 0)}
+                            self.follow[token_or_var] = self.follow.get(token_or_var, set()) | first[beta] - {(EMPTY_TOKEN, 0)}
                         if i == len(production[1]) - 1 \
                                 or all(b in V and (b, (EMPTY_TOKEN, 0)) in production_list for b in production[1][i + 1:]) \
                                 and production[0] != token_or_var:
-                            follow[token_or_var] = follow.get(token_or_var, set()) | follow.get(production[0], set())
-                        if pre_len < len(follow.get(token_or_var, set())):
+                            self.follow[token_or_var] = self.follow.get(token_or_var, set()) | self.follow.get(production[0], set())
+                        if pre_len < len(self.follow.get(token_or_var, set())):
                             flag = True
-        print_first_or_follow(follow, "FOLLOW")
+        print_first_or_follow(self.follow, "FOLLOW")
         # 建立项目集规范族
         ItemClosure.make_canonical_collection()
         # 求分析表
@@ -93,7 +93,7 @@ class AnalysisTable:
                 if item.left == GrammarVarEnum.ROOT and item.is_reduce():
                     self.action[(k, (EOF_TOKEN, 0))] = "acc"
                 elif item.is_reduce():
-                    for a in follow[item.left]:
+                    for a in self.follow[item.left]:
                         self.action[(k, a)] = "r" + str(item.production_num)
                 else:
                     a = item.get_next_token_or_var()

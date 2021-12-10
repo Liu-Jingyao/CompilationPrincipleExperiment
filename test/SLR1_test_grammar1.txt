@@ -1,6 +1,0 @@
-S E
-E TH
-H +TH|ε
-T FG
-G *FG|ε
-F (E)|id
