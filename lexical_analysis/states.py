@@ -1,3 +1,5 @@
+import string
+
 import yaml
 import os
 
@@ -63,7 +65,7 @@ class EndState(State):
         return self.value_func(token)
 
 
-# 解析yaml状态转换图
+# 解析yaml格式的词法状态转换图
 STATES = [None for _ in range(200)]
 with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'stateProperties.yaml'), 'r', encoding='utf-8') as f:
     file_data = f.read()
@@ -79,7 +81,7 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'statePropert
             func_edges = [(CHARSET_FUNC_DICT[key], state_data['edges'][key]) for key in
                           set(state_data['edges'].keys()) & set(CHARSET_FUNC_DICT.keys())]
             char_edges = {key: state_data['edges'][key] for key in
-                          set(state_data['edges'].keys()) & set(CATEGORY_DICT.keys())}
+                          set(state_data['edges'].keys()) & set(string.printable)}
             if 'other' in state_data['edges'].keys():
                 state = State(state_data['num'], func_edges, char_edges, state_data['edges']['other'])
             else:

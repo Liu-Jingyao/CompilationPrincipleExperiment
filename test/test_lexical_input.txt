@@ -1,4 +1,5 @@
 int main() {
+    1EC
     int a;
     a = 10;
     a a;

@@ -4,27 +4,30 @@ from utils import *
 
 def token_scan(inputCache):
     """
-    ch: 存放当前读入的输入字符。
-    token: 存放构成单词的字符串。
-    :return: 当前token的(类别码，属性值)二元组
+    token解析函数
+    ch: 存放当前读入的输入单词。
+    token: 存放当前解析出的token元组。
+    token在内存中的表示: (类别码，值)
+    :param inputCache:
+    :return:
     """
     state_now = 0
-    # 如果是基本状态，继续读取字符进行状态转移
+    # 如果是非终结状态，则继续读取字符进行状态转移
     while STATES[state_now].state_type() == NORMAL_TYPE:
         ch = inputCache.getchar()
         state_now = STATES[state_now].next_state(ch)
-        # 到达文件末尾，退出循环处理最后一个token
+        # 到达文件末尾，退出循环处理最后一个输入单词
         if ch == EOF:
             break
-        # 转移至ERROR_STATE，返回错误token的二元组
+        # 如果转移到了出错状态，返回表示出错的特殊token
         if state_now == ERROR_STATE:
-            return UNRECOGNIZED_TOKEN, inputCache.pop_token()
-    # 如果最后转移到了终止状态，调用该状态获取二元组的方法并返回
+            return UNRECOGNIZED_TOKEN_CATEGORY, inputCache.pop_token()
+    # 如果由最后一个输入单词转移到了终止状态，调用该状态的token生成方法
     if STATES[state_now].state_type() == FINAL_TYPE:
         return STATES[state_now].get_value(inputCache.pop_token())
-    # 如果最后转移到了需要回退的终止状态，先回退读入指针再返回二元组
+    # 如果由最后一个输入单词转移到了需要回退的终止状态，先回退读入指针再生成token
     if STATES[state_now].state_type() == ROLLBACK_FINAL_TYPE:
         inputCache.retract(1)
         return STATES[state_now].get_value(inputCache.pop_token())
-    # 否则当前没有任何token可识别，到达文件末尾
-    return EOF_TOKEN, 0
+    # 否则当前没有任何token可识别，返回表示文件结束的特殊token
+    return EOF_TOKEN_CATEGORY, 0

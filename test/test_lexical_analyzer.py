@@ -6,6 +6,6 @@ import yaml
 if __name__ == '__main__':
     inputCache = InputCache("test_lexical_input.txt")
     token = token_scan(inputCache)
-    while token[0] != EOF_TOKEN:
+    while token[0] != EOF_TOKEN_CATEGORY:
         print(token, end=" ")
         token = token_scan(inputCache)
