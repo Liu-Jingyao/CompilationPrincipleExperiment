@@ -196,7 +196,7 @@ class ItemClosure:
         # 持续扩展直到结果不再扩大
         while flag:
             flag = False
-            # 对中间结果中每一个非归约项目B->alpha.A beta，寻找所有形如A->gama的产生式加入中间结果
+            # 对中间结果中每一个非归约项目B->alpha.A beta, 寻找所有形如A->gama的产生式加入中间结果
             for item in self.closure_list:
                 for production_num, production in enumerate(production_list):
                     if item.is_wait_reduce() and item.get_next_token_or_var() == production[0] \

@@ -54,7 +54,7 @@ def token_analysis(tokenReceiveCache):
             # 获取下一个输入符号
             token = tokenReceiveCache.gettoken()
         elif analysis_table.action[(s.num, a)][0] == 'r':
-            # ri表示按第k个产生式A->beta归约
+            # ri表示按第i个产生式A->beta归约
             k = int(analysis_table.action[(s.num, a)][1:])
             # 从符号栈弹出产生式k需要的beta串
             len_beta = len(production_list[k][1])

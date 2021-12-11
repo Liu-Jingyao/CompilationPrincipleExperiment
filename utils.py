@@ -200,7 +200,7 @@ initial_production_list = [
       [GrammarVarEnum.BOOL_EXPRESSION, (33, 0), GrammarVarEnum.BOOL_EXPRESSION],
       [GrammarVarEnum.BOOL_EXPRESSION, (34, 0), GrammarVarEnum.BOOL_EXPRESSION],
       [(18, 0), GrammarVarEnum.BOOL_EXPRESSION], [GrammarVarEnum.FUNC_CALL],
-      [(25, 0), GrammarVarEnum.BOOL_EXPRESSION, (26, 0)], [(IDENTIFIER, 0)], [(132, 0)], [(133, 0)]]),
+      [(25, 0), GrammarVarEnum.BOOL_EXPRESSION, (26, 0)],  [(132, 0)], [(133, 0)]]),
     # 函数调用->标识符 左括号 实际参数 右括号|标识符 左括号 右括号
     (GrammarVarEnum.FUNC_CALL,
      [[(IDENTIFIER, 0), (25, 0), GrammarVarEnum.REAL_PARAM, (26, 0)], [(IDENTIFIER, 0), (25, 0), (26, 0)]]),

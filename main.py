@@ -19,7 +19,7 @@ def lexical_analyze(q):
     while token[0] != EOF_TOKEN_CATEGORY:
         # 忽略识别失败的单词并输出
         while token[0] == UNRECOGNIZED_TOKEN_CATEGORY:
-            print("[ERROR] 检测到词法错误, 无法识别单词%s" % token[1])
+            print("[ERROR] 检测到词法错误, 无法识别单词%s\n" % token[1])
             token = token_scan(inputCache)
         # 将识别成功的token放入队列进行语法分析
         q.put(token)
